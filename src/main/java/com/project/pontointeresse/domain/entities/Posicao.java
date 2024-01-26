@@ -2,7 +2,6 @@ package com.project.pontointeresse.domain.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,11 +10,9 @@ import lombok.ToString;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -36,7 +33,7 @@ public class Posicao {
     @Column(name = "placa", nullable = false)
     private String placa;
     @Column(name = "data_posicao", nullable = false)
-    private LocalDate dataPosicao;
+    private LocalDateTime dataPosicao;
     @Column(name = "velocidade", nullable = false)
     private Integer velocidade;
     @Column(name = "longitude", nullable = false)
