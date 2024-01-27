@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
+
 import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
@@ -22,7 +24,7 @@ public class PosicaoController {
     private final PosicaoService posicaoService;
 
     @PostMapping
-    public ResponseEntity<PosicaoResponse> salvar(@RequestBody PosicaoRequest posicaoRequest) {
+    public ResponseEntity<PosicaoResponse> salvar(@RequestBody @Valid PosicaoRequest posicaoRequest) {
         return new ResponseEntity<>(posicaoService.salvar(posicaoRequest), CREATED);
     }
 

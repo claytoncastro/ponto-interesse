@@ -9,6 +9,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 @Getter
 @Setter
 @Builder
@@ -17,11 +20,17 @@ import lombok.ToString;
 @AllArgsConstructor
 public class PosicaoRequest {
 
+    @NotBlank(message = "O campo 'placa' é obrigatório!")
     private String placa;
+    @NotBlank(message = "O campo 'dataPosicao' é obrigatório!")
     private String dataPosicao;
+    @NotNull(message = "O campo 'velocidade' é obrigatório!")
     private Integer velocidade;
+    @NotNull(message = "O campo 'longitude' é obrigatório!")
     private Double longitude;
+    @NotNull(message = "O campo 'latitude' é obrigatório!")
     private Double latitude;
+    @NotNull(message = "O campo 'ingnicao' é obrigatório!")
     private boolean ingnicao;
 
     public static Posicao from(PosicaoRequest data) {
