@@ -45,13 +45,13 @@ public class PosicaoImportacaoCSV {
 
     private static LocalDateTime obterDataPosicao(String dataPosicao) {
         try {
-            Date date = new SimpleDateFormat("EEE MMM dd yyyy HH:mm:ss 'GMT'Z (zzz)", ENGLISH)
+            Date date = new SimpleDateFormat("EEE MMM dd yyyy HH:mm:ss 'GMT'Z", ENGLISH)
                     .parse(dataPosicao);
 
             return LocalDateTime
                     .ofInstant(date.toInstant(), ZoneId.systemDefault());
         } catch (ParseException ex) {
-            throw new ParseDataException("Erro ao converter data '" + dataPosicao + "' na classe PosicaoImportacaoCSV");
+            throw new ParseDataException("Erro ao converter data '" + dataPosicao + "'");
         }
     }
 

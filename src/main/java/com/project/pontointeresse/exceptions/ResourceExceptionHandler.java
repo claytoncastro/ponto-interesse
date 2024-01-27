@@ -21,7 +21,7 @@ public class ResourceExceptionHandler extends ResponseEntityExceptionHandler {
                 .status(BAD_REQUEST.value())
                 .title("Problema ao converter dado!")
                 .detail(rnfException.getMessage())
-                .developerMessage(rnfException.getClass().getSimpleName())
+                .developerMessage("Classe '" + rnfException.getStackTrace()[0].getFileName() + "'")
                 .build();
         return new ResponseEntity<>(resourceNotFound, BAD_REQUEST);
     }
