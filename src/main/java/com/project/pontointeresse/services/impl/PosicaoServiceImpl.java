@@ -7,6 +7,7 @@ import com.project.pontointeresse.domain.entities.Posicao;
 import com.project.pontointeresse.repository.PosicaoRepository;
 import com.project.pontointeresse.services.PosicaoService;
 import com.project.pontointeresse.util.CSVUtil;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,28 +18,29 @@ import java.util.List;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class PosicaoServiceImpl implements PosicaoService {
 
     private final PosicaoRepository posicaoRepository;
-
-    public PosicaoServiceImpl(PosicaoRepository posicaoRepository) {
-        this.posicaoRepository = posicaoRepository;
-    }
 
     @Override
     @Transactional
     public PosicaoResponse salvar(PosicaoRequest posicaoRequest) {
         log.info("Inserindo nova posição. . .");
-        return null;
+        Posicao posicaoToSave = PosicaoRequest.from(posicaoRequest);
+
+        return PosicaoResponse
+                .from(posicaoRepository.save(posicaoToSave));
     }
 
     @Override
+    @Transactional
     public void salvarDadosCSV(MultipartFile file) {
         log.info("Salvando posições a partir do csv. . .");
         List<String[]> linhas = CSVUtil.obterLinhasCSV(file);
         List<Posicao> posicoes = obterListaPosicaoDoCSVParaSalvar(linhas);
         posicaoRepository.saveAll(posicoes);
-        log.info("Posições a partir do csv salvas com sucesso. . .");
+        log.info("Posições a partir do CSV salvas com sucesso. . .");
     }
 
     private List<Posicao> obterListaPosicaoDoCSVParaSalvar(List<String[]> linhas) {

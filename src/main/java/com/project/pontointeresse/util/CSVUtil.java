@@ -2,6 +2,8 @@ package com.project.pontointeresse.util;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
+import com.project.pontointeresse.exceptions.FileIsEmptyException;
+import com.project.pontointeresse.exceptions.IOCsvException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,19 +16,13 @@ import java.util.List;
 public abstract class CSVUtil {
 
     public static List<String[]> obterLinhasCSV(MultipartFile file) {
-        List<String[]> linhas = new ArrayList<>();
-        if (file.isEmpty()) {
-            log.info("Por favor, selecione um arquivo CSV.");
-        }
+        if (file.isEmpty()) throw new FileIsEmptyException("Por favor, selecione um arquivo CSV.");
 
         try (CSVReader csvReader = new CSVReader(new InputStreamReader(file.getInputStream()))) {
-            linhas = csvReader.readAll();
-            log.info("Arquivo CSV enviado com sucesso!");
+            return csvReader.readAll();
         } catch (IOException | CsvException e) {
-            e.printStackTrace();
-            log.info("Falha ao processar o arquivo CSV.");
+            throw new IOCsvException("Erro ao tentar ler linhas do arquivo CSV");
         }
-        return linhas;
     }
 
 }
