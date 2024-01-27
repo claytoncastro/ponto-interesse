@@ -1,6 +1,7 @@
 package com.project.pontointeresse.domain.dtos;
 
 import com.project.pontointeresse.domain.entities.Posicao;
+import com.project.pontointeresse.exceptions.ParseDataException;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -44,17 +45,14 @@ public class PosicaoImportacaoCSV {
 
     private static LocalDateTime obterDataPosicao(String dataPosicao) {
         try {
-            String dataResult = dataPosicao.split("\\(")[0].trim();
-            SimpleDateFormat parserSDF = new SimpleDateFormat("EEE MMM dd yyyy HH:mm:ss 'GMT'Z", ENGLISH);
-
-            Date date = parserSDF.parse(dataResult);
+            Date date = new SimpleDateFormat("EEE MMM dd yyyy HH:mm:ss 'GMT'Z (zzz)", ENGLISH)
+                    .parse(dataPosicao);
 
             return LocalDateTime
                     .ofInstant(date.toInstant(), ZoneId.systemDefault());
         } catch (ParseException ex) {
-            ex.printStackTrace();
+            throw new ParseDataException("Erro ao converter data '" + dataPosicao + "' na classe PosicaoImportacaoCSV");
         }
-        return null;
     }
 
 }
