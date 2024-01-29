@@ -7,6 +7,6 @@ import org.springframework.web.multipart.MultipartFile;
 public interface PontoInteresseService {
 
     PontoInteresseResponse salvar(PontoInteresseRequest posicaoRequest);
-    void salvarDadosCSV(MultipartFile file);
+    void salvarPontosInteresseAPartirDoCSV(MultipartFile file);
 
 }

@@ -7,6 +7,6 @@ import org.springframework.web.multipart.MultipartFile;
 public interface PosicaoService {
 
     PosicaoResponse salvar(PosicaoRequest posicaoRequest);
-    void salvarDadosCSV(MultipartFile file);
+    void salvarPosicoesAPartirDoCSV(MultipartFile file);
 
 }

@@ -81,10 +81,10 @@ public class PontoInteresseController {
                     @ApiResponse(code = 404, message = "Not Found"),
                     @ApiResponse(code = 500, message = "Internal Server Error")
             })
-    public ResponseEntity<Void> salvarDadosCSV(
-            @ApiParam(required = true, value = "Document para upload")
+    public ResponseEntity<Void> salvarPontosInteresseAPartirDoCSV(
+            @ApiParam(required = true, value = "Documento para upload")
             @RequestPart MultipartFile file) {
-        pontoInteresseService.salvarDadosCSV(file);
+        pontoInteresseService.salvarPontosInteresseAPartirDoCSV(file);
         return ResponseEntity.ok().build();
     }
 

@@ -81,10 +81,10 @@ public class PosicaoController {
                     @ApiResponse(code = 404, message = "Not Found"),
                     @ApiResponse(code = 500, message = "Internal Server Error")
             })
-    public ResponseEntity<Void> salvarDadosCSV(
-            @ApiParam(required = true, value = "Document para upload")
+    public ResponseEntity<Void> salvarPosicoesAPartirDoCSV(
+            @ApiParam(required = true, value = "Documento para upload")
             @RequestPart MultipartFile file) {
-        posicaoService.salvarDadosCSV(file);
+        posicaoService.salvarPosicoesAPartirDoCSV(file);
         return ResponseEntity.ok().build();
     }
 

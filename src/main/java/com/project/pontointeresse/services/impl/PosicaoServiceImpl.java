@@ -6,15 +6,15 @@ import com.project.pontointeresse.domain.dtos.responses.PosicaoResponse;
 import com.project.pontointeresse.domain.entities.Posicao;
 import com.project.pontointeresse.repository.PosicaoRepository;
 import com.project.pontointeresse.services.PosicaoService;
-import com.project.pontointeresse.util.CSVUtil;
+import com.project.pontointeresse.util.ObjectCSVUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -35,33 +35,18 @@ public class PosicaoServiceImpl implements PosicaoService {
 
     @Override
     @Transactional
-    public void salvarDadosCSV(MultipartFile file) {
+    public void salvarPosicoesAPartirDoCSV(MultipartFile file) {
         log.info("Salvando posições a partir do csv. . .");
-        List<String[]> linhas = CSVUtil.obterLinhasCSV(file);
-        List<Posicao> posicoes = obterListaPosicaoDoCSVParaSalvar(linhas);
-        posicaoRepository.saveAll(posicoes);
+
+        List<Posicao> posicoesToSave = ObjectCSVUtil
+                .obterObjetoCSVApi(file, PosicaoImportacaoCSV.class)
+                .stream()
+                .map(PosicaoImportacaoCSV::from)
+                .collect(Collectors.toList());
+
+        posicaoRepository.saveAll(posicoesToSave);
+
         log.info("Posições a partir do CSV salvas com sucesso. . .");
     }
 
-    private List<Posicao> obterListaPosicaoDoCSVParaSalvar(List<String[]> linhas) {
-        List<Posicao> posicoes = new ArrayList<>();
-        boolean isCabecalho = true;
-
-        for (String[] linha : linhas) {
-            if(!isCabecalho) {
-                PosicaoImportacaoCSV posicao = PosicaoImportacaoCSV.builder()
-                        .placa(linha[0])
-                        .dataPosicao(linha[1])
-                        .velocidade(linha[2])
-                        .longitude(linha[3])
-                        .latitude(linha[4])
-                        .ingnicao(linha[5])
-                        .build();
-                posicoes.add(PosicaoImportacaoCSV.from(posicao));
-            }
-            isCabecalho = false;
-        }
-
-        return posicoes;
-    }
 }
