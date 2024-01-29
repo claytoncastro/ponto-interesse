@@ -17,6 +17,7 @@ import static springfox.documentation.spi.DocumentationType.SWAGGER_2;
 @EnableSwagger2
 public class SpringFoxConfig {
     public static final String POSICAO_TAG = "Endpoints de Posição";
+    public static final String  PONTO_INTERESSE_TAG = "Endpoints de Ponto de Interesse";
 
     @Bean
     public Docket apiConfigDocs() {
@@ -26,7 +27,8 @@ public class SpringFoxConfig {
                 .paths(PathSelectors.any())
                 .build()
                 .tags(
-                        new Tag(POSICAO_TAG, "Controller de Posição")
+                        new Tag(POSICAO_TAG, "Controller de Posição"),
+                        new Tag(PONTO_INTERESSE_TAG, "Controller de Ponto de Interesse")
                 )
                 .apiInfo(infoDocs());
     }
